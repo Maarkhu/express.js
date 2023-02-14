@@ -3,17 +3,18 @@ const numberBInput = document.querySelector('#number-b');
 const form = document.querySelector('form');
 const resultDiv = document.querySelector('#result');
 
-
-    
-}
+function setResult(text, color) {
+    resultDiv.innerText = text
+    resultDiv.style.border = `3px solid ${color}`
+};
 
 form.addEventListener('submit', async event => {
     event.preventDefault();
 
     const numberA = Number(numberAInput.value);
     const numberB = Number(numberBInput.value);
-    resultDiv.innerText = 'Loading...'
-    resultDiv.style.border = 'none';
+    setResult('Loading...', 'transparent')
+
     console.log({numberA, numberB});
 
     const result = await fetch('/calc/check', {
@@ -23,10 +24,10 @@ form.addEventListener('submit', async event => {
     })
     const data = await result.json();
     if (data.divider) {
-        resultDiv.innerText = 'Number B is divider of Number A';
-        resultDiv.style.border = '2px solid green';
-    } else {resultDiv.innerText = 'Number B is not a divider of Number A';
-    resultDiv.style.border = '2px solid red';}
+        setResult('Number B is divider of Number A', 'green');
+    } else {
+        setResult('Number B is not a divider of Number A', 'red');
+    }
 })
 
 
