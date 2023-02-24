@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const hbs = require('express-handlebars');
 const {cookieRouter} = require("./routes/cookie.js");
 
 
@@ -11,7 +12,13 @@ app.use(cookieParser());
 app.use(express.urlencoded( {
     extended: true,
 }));
+app.engine('.hbs', hbs.engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
 app.use('/cookie', cookieRouter);
+
+app.get('/hi', (req, res) => {
+    res.render('home');
+})
 
 
 
